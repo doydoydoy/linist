@@ -1,11 +1,18 @@
 <?php 
 
+session_start();
+if(!isset($_SESSION['username'])){
+	$_SESSION['username']="";
+	$_SESSION['role']="";
+} 
+
+
 // // Call Controller and Model scripts
-// require_once('controller.php');
-// require_once('model.php');
+require_once('controller/controller.php');
+require_once('model/model.php');
 
 // // Create an instance of a controller
-// $controller = new Controller();
+$controller = new Controller();
 
 /** URI Routing **/
 // route of the request
@@ -15,15 +22,24 @@ $index = substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], '/index.ph
 
 switch ($uri) {
 	case $index:
-		include('view/intro.php');
+		$controller->main();
 		break;
 
 	case $index."login":
-		include('view/login.php');
+		$controller->login();
+		break;
+
+	case $index."dashboard":
+		header('location: /linist/');
+		$controller->main();
 		break;
 
 	case $index."register":
-		include('view/register.php');
+		$controller->register();
+		break;
+
+	case $index."logout":
+		$controller->logout();
 		break;
 	
 	default:

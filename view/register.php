@@ -83,14 +83,20 @@
 			margin: 5px 0 15px;
 		}
 
-		main input[type='button']
+		main input[type='submit']
 		{
 			background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
+		}
+
+		main .btn:hover
+		{
+		    background-image: linear-gradient(-180deg, #2fcb53 0%, #269f42 90%);
 		}
 
 		footer
 		{
 			margin-top: 30px;
+			padding-bottom: 20px;
 		}
 
 		footer div
@@ -133,10 +139,10 @@
 			</div>
 			<br>
 
-			<form>
-				<label>Email Address</label>
+			<form method="POST">
+				<label>Full Name</label>
 				<div class="login-input-div">
-					<input type="text" class="form-control" name="email"></input>
+					<input type="text" class="form-control" name="fullname"></input>
 				</div>
 				<label>Username</label>
 				<div class="login-input-div">
@@ -151,10 +157,10 @@
 					<input type="text" class="form-control" name="conf-password"></input>
 				</div>
 				<div>
-					<input type="button" class="form-control btn btn-info" value="Sign Up"></input>
+					<input type="submit" class="form-control btn btn-info" value="Sign Up" name="btn_register"></input>
 				</div>
 				<div style="padding-top: 10px" class="text-center">
-					<span>Already Registered? <a href="/milestone-2/linist/login"> Sign In. </a></span>
+					<span>Already Registered? <a href="/linist/login"> Sign In. </a></span>
 				</div>
 			</form>
 		</div>	

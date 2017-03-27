@@ -107,7 +107,8 @@
 
 		footer
 		{
-			margin-top: 80px
+			margin-top: 80px;
+			padding-bottom: 10px;
 		}
 
 		footer div
@@ -148,7 +149,7 @@
 			</div>
 			<br>
 
-			<form>
+			<form method="POST">
 				<label>Username</label>
 				<div class="login-input-div">
 					<input type="text" class="form-control" name="username"></input>
@@ -158,7 +159,7 @@
 					<input type="password" class="form-control" name="password"></input>
 				</div>
 				<div>
-					<input type="button" class="form-control btn btn-success" value="Sign In"></input>
+					<input type="submit" class="form-control btn btn-success" value="Sign In" name="btn_login"></input>
 				</div>
 			</form>
 		</div>	
@@ -166,7 +167,7 @@
 	<div class="row">
 		<div class="text-center new-linist-div">
 			<span>New to Linist?
-				<a href="/milestone-2/linist/register">Create new account.</a>
+				<a href="/linist/register">Create new account.</a>
 			</span>
 		</div>
 	</div>

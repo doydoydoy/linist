@@ -197,9 +197,9 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/milestone-2/linist/login" class="list">Sign In</a></li>
+        <li><a href="/linist/login" class="list">Sign In</a></li>
         <li><a class="nav-or">&nbsp;&nbsp;or&nbsp;&nbsp;</a></li>
-        <li><a href="/milestone-2/linist/register" class="list">Sign Up</a></li>
+        <li><a href="/linist/register" class="list">Sign Up</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -219,10 +219,10 @@
         </h5>
         <form>
           <div>
-            <a href="/milestone-2/linist/register"><input type="button" value="Get Started" class="form-control btn btn-info"></input></a>
+            <a href="/linist/register"><input type="button" value="Get Started" class="form-control btn btn-info"></input></a>
           </div>
           <div>
-            <a href="/milestone-2/linist/login"><input type="button" value="Sign In" class="form-control btn btn-default"></input></a>
+            <a href="/linist/login"><input type="button" value="Sign In" class="form-control btn btn-default"></input></a>
           </div>
         </form>
       </div>
