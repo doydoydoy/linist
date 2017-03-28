@@ -204,7 +204,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/linist/">
         <span class="glyphicon glyphicon-pencil"></span> 
         <span>linist</span>
         </a>
@@ -221,7 +221,7 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/milestone-2/linist/login" class="list">
+        <li><a href="/linist/login" class="list">
 			<span class="glyphicon glyphicon-pushpin"></span>
 			</a>
 		</li>
@@ -273,59 +273,81 @@
 		<form method="POST" style="">
 			<div class="col-lg-7">
 				<div class="row">
-					<div class="">
+					<div>
 						<label>Fullname</label><br>
 					</div>
-					<div class="">
-						<input type="text" class="form-control" value="<?= $_SESSION['fullname'] ?>"></input>
+					<div>
+						<input type="text" class="form-control" value="<?= $_SESSION['fullname'] ?>" name='fullname'></input>
 					</div>
 				</div>
 				<div class="row">
-					<div class="">
+					<div>
 						<label>Bio</label>
 					</div>
-					<div class="">
-						<textarea class="form-control" style="resize: none;"><?= $profile['descript'] ?></textarea>
+					<div>
+						<textarea class="form-control" style="resize: none;" maxlength="255" name="bio"><?= $profile['descript'] ?></textarea>
 					</div>
 				</div>
 				<div class="row">
-					<div class="">
+					<div>
 						<label>Series</label>
 					</div>
-					<div class="">
-						<input type="text" class="form-control" value="<?= $profile['series'] ?>"></input>
+					<div>
+						<input type="text" class="form-control" value="<?= $profile['series'] ?>" name="series"></input>
 					</div>
 				</div>
 				<div class="row">
-					<div class="">
+					<div>
 						<label>Profile Image Link</label>
 					</div>
-					<div class="">
-						<input type="text" class="form-control" value="<?= $profile['profile_img_link'] ?>"></input>
+					<div>
+						<input type="text" class="form-control" value="<?= $profile['profile_img_link'] ?>" name="profile_img"></input>
 					</div>
 				</div>
 				<div class="row">
-					<div class="">
+					<div>
 						<label>Location</label>
 					</div>
-					<div class="">
-						<input type="text" class="form-control" value="<?= $profile['location'] ?>"></input>
+					<div>
+						<input type="text" class="form-control" value="<?= $profile['location'] ?>" name="location"></input>
 					</div>
 				</div>
 				<div class="row">
-					<div class="">
+					<div>
 						<label>Work / Affiliation</label>
 					</div>
-					<div class="">
-						<input type="text" class="form-control" value="<?= $profile['work'] ?>"></input>
+					<div>
+						<input type="text" class="form-control" value="<?= $profile['work'] ?>" name="work"></input>
 					</div>
 				</div>
 				<div class="row">
-					<input type="submit" class="btn" style="border-color: rgba(27,31,35,0.35); background-color: #e6ebf1; background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%); font-weight: bold;"></input>
+					<div>
+						<label>Website</label>
+					</div>
+					<div>
+						<input type="text" class="form-control" value="<?= $profile['website'] ?>" name="website"></input>
+					</div>
+				</div>
+				<div class="row">
+					<input type="submit" class="btn" style="border-color: rgba(27,31,35,0.35); background-color: #e6ebf1; background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%); font-weight: bold;" name="btn_profileInfo"></input>
 				</div>
 			</div>
-			<div class="col-lg-5" style="">
-				<div style="background-color: black; height: 200px; width: 200px; margin: auto; border-radius: 4px;">
+			<div class="col-lg-5 ">
+				<div style="margin: auto; width: 200px;">
+					<label>Profile Picture</label>
+					<div style="background: url(<?php 
+						if (is_null($profile['profile_img_link'])||empty($profile['profile_img_link'])||!isset($profile['profile_img_link']))
+						{
+							echo "http://www.freeiconspng.com/uploads/no-image-icon-15.png";
+						}
+						else
+						{
+							echo $profile['profile_img_link'];
+						}
+
+
+							?>) center/cover no-repeat; height: 200px; width: 200px; border-radius: 4px;">
+					</div>
 				</div>
 			</div>
 		</form>

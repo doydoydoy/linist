@@ -51,7 +51,7 @@ class Model
 			}
 			else
 			{
-				if ($row['id']) 
+				if ($row['id']==$id) 
 				{
 					$data = $row;
 				}
@@ -62,12 +62,30 @@ class Model
 
 	}
 
+	function insertNewAccount($username, $sha_pass, $role, $fullname)
+	{
+		$db = $this->connectDB();
+		$sql = "INSERT INTO tbl_accounts (username, password, role, fullname) values ('$username','$sha_pass', '$role', '$fullname');";
+		if(mysqli_query($db, $sql))
+		{
+			mysqli_query($db, "INSERT INTO tbl_profiles(acct_id) values (".$db->insert_id.")");
+			echo "<script>alert('Successfully registered.');</script>";
+			echo "<script>window.location.href = 'login'</script>";
+		}
+		$this->closeDB($db);
+	}
 
-	/** Not working yet, will get back to you later **/
+
+
+
+
+
+
+	/** Now working but getRowData is much more flexible **/
 
 	// function getProfileData($id)
 	// {
-	// 	$sql = "SELECT *.* FROM tbl_accounts INNER JOIN tbl_profiles ON tbl_profiles.id=tbl_accounts  WHERE id=$id";
+	// 	$sql = "SELECT *.* FROM tbl_accounts INNER JOIN tbl_profiles ON tbl_accounts.id=tbl_profiles.acct_id  WHERE id='".$id"'";
 	// 	$conn = $this->connectDB();
 	// 	$result = mysqli_query($conn, $sql);
 	// 	$this->closeDB($conn);

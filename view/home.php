@@ -196,9 +196,10 @@
 			overflow: hidden;
 		}
 
-		main .home-left > div:first-child > img
+		main .home-left > div:first-child > div
 		{
 			height: 230px;
+			width: 100%;		
 		}
 
 		main .home-left h1, main .home-left h3, main .home-left h5
@@ -288,7 +289,16 @@
 
 	<div class="col-lg-3 home-left">
 		<div>
-			<img src="../discover.png" id="profile_image">
+			<div style="background: url(<?php 
+						if (is_null($profile['profile_img_link'])||empty($profile['profile_img_link'])||!isset($profile['profile_img_link']))
+						{
+							echo 'http://www.freeiconspng.com/uploads/no-image-icon-15.png';
+						}
+						else
+						{
+							echo $profile['profile_img_link'];
+						}?>) center/cover no-repeat;" id="profile_image">
+			</div>
 		</div>
 		<h1><?= $account['fullname'] ?></h1>
 		<h3><?= $account['username'] ?></h3>

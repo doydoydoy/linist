@@ -27,20 +27,20 @@
 </head>
 <body>
 
-<main class="container-fluid" style="padding: 0px; background: black;">
-	<div style="background: url(../discover.png) center/cover no-repeat; height: 50vh;">
+<main class="container-fluid" style="padding: 0px; background: white;">
+	<div style="background: url(../discover.png) center/cover no-repeat; height: 50vh;;">
 		
 	</div>
 	<div style="margin: 0 150px;">
 		<div class="row" style="position: relative">
-			<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-65%); padding: 5px; border-radius: 4px; background: white;">
-				<div style="background: url(../discover.png) center/cover no-repeat; height: 150px; width: 150px; border-radius: 4px;">
+			<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-65%); padding: 5px; border-radius: 4px;">
+				<div style="background: url(../discover.png) center/cover no-repeat; height: 150px; width: 150px; border-radius: 4px; outline: 1px solid #eeefff">
 				</div>				
 			</div>
 		</div>
 		<div class="row">
 			<div class='text-center' style="margin-top: 60px;">
-				<h1 style="font-weight: bold; color: white;">Sugoi Comics</h1>
+				<h1 style="font-weight: bold; color: #4f4f4f;">Sugoi Comics</h1>
 			</div>
 			<div class="text-center">
 				<li style="list-style: none">
@@ -53,25 +53,24 @@
 		<div class="row" style="border: 1px solid #cecece; margin: 20px 0;">
 			<div class="text-center" style="padding: 15px 30px">
 				<img src="http://files.explosm.net/comics/Dave/magiclamp.png" style="height: auto; max-width: 100%;">
-				<h3 style="color: white;">Magic Lamp</h3>
-				<p style="color: white;"></p>
-				<div style="color: white; font-size: 30px; padding: 5px 0">
+				<h3 style="color: black;">Magic Lamp</h3>
+				<p style="color: black;"></p>
+				<div style="color: black; font-size: 30px; padding: 5px 0">
 					<span class="glyphicon glyphicon-menu-left" style="padding: 0 40px;"></span>
 					<i class="fa fa-random" aria-hidden="true" style="padding: 0 40px;"></i>
 					<span class="glyphicon glyphicon-menu-right" style="padding: 0 40px;"></span>
 				</div>
 			</div>
-			<div style="border-top: 1px solid white; padding: 10px 0; overflow: hidden;">
+			<div style="border-top: 1px solid black; padding: 10px 0; overflow: hidden;">
 				<div class="col-lg-2">
 					<div style="background: url(../discover.png) center/cover no-repeat; height: 100px;">
 					</div>
 				</div>
 				<div class="col-lg-10">
-					<h3 style="margin: 10px 0 5px">Sissel Yamaguchi</h3>
-					<h4 style="margin: 0">siyam09</h4>
-					<h5 style="margin: 5px 0 0">Loves anime and currently watching h...</h5>
+					<h3 style="margin: 10px 0 5px"><?= $account['fullname'] ?></h3>
+					<h4 style="margin: 0"><?= $account['username'] ?></h4>
+					<h5 style="margin: 5px 0 0"><?= $profile['descript'] ?></h5>
 				</div>
-
 			</div>
 		</div>
 		<div class="row">

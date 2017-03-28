@@ -64,7 +64,7 @@ class Controller
 					$_SESSION['username']=$row['username'];
 					$_SESSION['role']=$row['role'];
 					$_SESSION['fullname']=$row['fullname'];
-					header('location: /linist/dashboard');
+					echo "<script>window.location.href= '/linist/dashboard'</script>";
 				}
 			}
 		}
@@ -81,25 +81,12 @@ class Controller
 			$password = $_POST['password'];
 			$role = 'regular';
 			$conf_pw = $_POST['conf-password'];
+			$sha_pass = sha1($password);
 			if(($password == $conf_pw)&&!($password=="")&&!(substr($password, 0, 0)==" "))
 			{
 				if (!($username=="")&&!(substr($username, 0, 0)==" ")) 
 				{
-					$sha_pass = sha1($password);
-					$db = $this->model->connectDB();
-					$sql = "INSERT INTO tbl_accounts (username, password, role, fullname) values ('$username','$sha_pass', '$role', '$fullname');";
-					
-					if(mysqli_query($db, $sql))
-					{
-						mysqli_query($db, "INSERT INTO tbl_profiles(acct_id) values (".$db->insert_id.")");
-						echo "<script>alert('Successfully registered.');</script>";
-						echo "<script>window.location.href = 'login'</script>";
-					}
-					else
-					{
-						$this->loginError('try');
-					}
-					$this->model->closeDB($db);
+					$this->model->insertNewAccount($username, $sha_pass, $role, $fullname);
 					session_destroy();
 				}
 				else
@@ -119,16 +106,67 @@ class Controller
 
 	function settings()
 	{
-		// Get row data from tbl_profiles
-		$account = $this->model->getRowData('accounts', $_SESSION['acct_id']);
-		$profile = $this->model->getRowData('profiles', $_SESSION['acct_id']);
-		include('view/editprofile.php');
+		$auth = $this->authenticate();
+		if($auth==0)
+		{
+			// Get row data from tbl_profiles
+			$account = $this->model->getRowData('accounts', $_SESSION['acct_id']);
+			$profile = $this->model->getRowData('profiles', $_SESSION['acct_id']);
+			include('view/editprofile.php');
+
+			if(isset($_POST['btn_profileInfo']))
+			{
+				$fullname = $_POST['fullname'];
+				$bio = $_POST['bio'];
+				$series = $_POST['series'];
+				$work = $_POST['work'];
+				$profile_img_link = $_POST['profile_img'];
+				$location = $_POST['location'];
+				$website = $_POST['website'];
+
+				$db = $this->model->connectDB();
+				$sql1 = "UPDATE tbl_accounts SET fullname='".$fullname."' WHERE id='".$_SESSION['acct_id']."'";
+				$sql2 = "UPDATE tbl_profiles SET descript='".$bio."', location='".$location."', work='".$work."', profile_img_link='".$profile_img_link."', website='".$website."', series='".$series."' WHERE acct_id='".$_SESSION['acct_id']."'";
+				if(mysqli_query($db, $sql1)&&mysqli_query($db, $sql2))
+				{
+					echo "<script>alert('Updated successfully.');</script>";
+					echo "<script>window.location.href = '/linist/settings'</script>";
+				}
+			}
+
+		}
+		else
+		{
+			header('location: /linist');
+		}
+		
 	}
 
-	function appearance()
+	function settAccount()
+	{
+		$auth = $this->authenticate();
+		if($auth==0)
+		{
+
+		}
+		else
+		{
+			header('location: /linist');
+		}
+	}
+
+	function settAppearance()
 	{
 
 	}
+
+	function account($id)
+	{
+		$account = $this->model->getRowData('accounts',$id);
+		$profile = $this->model->getRowData('profiles',$id);		
+		include('view/profile.php');
+	}
+
 
 	function logout()
 	{
@@ -153,6 +191,27 @@ class Controller
 	}
 
 
+	function authenticate()
+	{
+		// flag 0 means authenticated, flag 1 not authenticated
+		$flag = 0;
+		if(!isset($_SESSION['username'])){
+			$_SESSION['username']="";
+			$_SESSION['role']="";
+			$flag = 1;
+		}
+		elseif($_SESSION['username']=="")
+		{
+			$flag = 1;
+		}
+		return $flag;
+	}
+
+	function getUsername()
+	{
+		$result = $this->model->getTableData('accounts');
+		return $result;
+	}
 
 
 	// Use only for debugging
