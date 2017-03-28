@@ -150,11 +150,11 @@
 				</div>
 				<label>Password</label>
 				<div class="login-input-div">
-					<input type="text" class="form-control" name="password"></input>
+					<input type="password" class="form-control" name="password"></input>
 				</div>
 				<label>Confirm Password</label>
 				<div class="login-input-div">
-					<input type="text" class="form-control" name="conf-password"></input>
+					<input type="password" class="form-control" name="conf-password"></input>
 				</div>
 				<div>
 					<input type="submit" class="form-control btn btn-info" value="Sign Up" name="btn_register"></input>

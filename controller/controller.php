@@ -117,6 +117,19 @@ class Controller
 
 	}
 
+	function settings()
+	{
+		// Get row data from tbl_profiles
+		$account = $this->model->getRowData('accounts', $_SESSION['acct_id']);
+		$profile = $this->model->getRowData('profiles', $_SESSION['acct_id']);
+		include('view/editprofile.php');
+	}
+
+	function appearance()
+	{
+
+	}
+
 	function logout()
 	{
 		session_destroy();

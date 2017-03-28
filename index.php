@@ -38,6 +38,14 @@ switch ($uri) {
 		$controller->register();
 		break;
 
+	case $index."settings":
+		$controller->settings();
+		break;
+
+	case $index."appearance":
+		$controller->appearance();
+		break;
+
 	case $index."logout":
 		$controller->logout();
 		break;

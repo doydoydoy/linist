@@ -151,6 +151,11 @@
 			padding: 0px 5px 0px;
 		}
 
+		.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover
+		{
+			background: transparent;
+		}
+
 		#nav-div .dropdown-menu > li > a:hover
 		{
 			background-color: white;
@@ -265,9 +270,9 @@
 			
         	<ul class="dropdown-menu">
         		<li>ACCOUNT</li>
-        		<li><a href="#"><span class="glyphicon glyphicon-home"></span>&emsp;Dashboard</a></li>
-        		<li><a href="#"><span class="glyphicon glyphicon-user"></span>&emsp;Profile</a></li>
-        		<li><a href="/linist/profileinfo"><span class="glyphicon glyphicon-edit"></span>&emsp;Profile Info</a></li>
+        		<li><a href="/linist/dashboard"><span class="glyphicon glyphicon-home"></span>&emsp;Dashboard</a></li>
+        		<li><a href="/linist/<?= $_SESSION['username'] ?>"><span class="glyphicon glyphicon-user"></span>&emsp;Profile</a></li>
+        		<li><a href="/linist/settings"><span class="glyphicon glyphicon-edit"></span>&emsp;Settings</a></li>
         		<hr>
         		<li><a href="/linist/logout"><span class="glyphicon glyphicon-log-out"></span>&emsp;Sign Out</a></li>
         	</ul>
