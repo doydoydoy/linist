@@ -75,6 +75,39 @@ class Model
 		$this->closeDB($db);
 	}
 
+	function insertNewPost($post)
+	{
+		$db = $this->connectDB();
+		$sql = "INSERT INTO tbl_posts (descript, title, post_date, imgLink, acct_id) values ('".$post['descript']."','".$post['title']."', '".$post['post_date']."', '".$post['imgLink']."', '".$post['acct_id']."')";
+		if(mysqli_query($db, $sql))
+		{
+			echo "<script>alert('Posted successfully.');</script>";
+		}
+		else
+		{
+			echo "<script>alert('www.');</script>";
+		}
+		$this->closeDB($db);
+	}
+
+	function getAccountPosts($id)
+	{
+		$db = $this->connectDB();
+		$sql = "SELECT * FROM tbl_posts WHERE acct_id='$id'";
+		$result = mysqli_query($db, $sql);
+		$this->closeDB($db);
+		return $result;
+	}
+
+	function editPosts($id, $edit)
+	{
+		$db = $this->connectDB();
+		// CONTINUE HERE
+		$sql = "UPDATE tbl_posts SET descript='";
+		$this->closeDB($db);
+
+	}
+
 
 
 

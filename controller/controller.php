@@ -33,13 +33,33 @@ class Controller
 			$account = $this->model->getRowData('accounts', $_SESSION['acct_id']);
 			// Get row data from tbl_profiles
 			$profile = $this->model->getRowData('profiles', $_SESSION['acct_id']);
+			$posts = $this->model->getAccountPosts($_SESSION['acct_id']);
 			
-			// Get profile data for specific acct_id   ||  Not working yet
-			// $profile = $this->model->getProfileData($_SESSION['acct_id']);
-
-
 			include('view/home.php');
-			echo "<script>alert('Hello ".$_SESSION['username']."')</script>";
+			if(isset($_POST['btn_submitComics']))
+			{
+				$post = [
+				"title" => $_POST['comicTitle'],
+				"descript" => $_POST['comicDesc'],
+				"imgLink" => $_POST['comicImg'],
+				"acct_id" => $_SESSION['acct_id'],
+				"post_date" => date("Y-m-d H:i:s")
+				];
+				$this->model->insertNewPost($post);
+				echo "<script>window.location.href = '/linist/'</script>";
+			}
+
+			if (isset($_POST['btn_editComics'])) 
+			{
+				$edit_post = [
+				"id" => $_POST['editid'],
+				"title" => $_POST['edit_title'],
+				"descript" => $_POST['edit_desc'],
+				"imgLink" => $_POST['edit_img']
+				];
+				$this->model->editPost($_SESSION['acct_id'], $edit_post);
+				echo "<script>window.location.href = '/linist/'</script>";
+			}
 
 		}		
 	}
