@@ -35,6 +35,14 @@ class Controller
 			$profile = $this->model->getRowData('profiles', $_SESSION['acct_id']);
 			$posts = $this->model->getAccountPosts($_SESSION['acct_id']);
 			
+			$posts_arr = [];
+			while($row = mysqli_fetch_assoc($posts))
+			{
+				$posts_arr[] = $row;
+			}
+			$posts_arr = array_reverse($posts_arr, true);
+
+
 			include('view/home.php');
 			if(isset($_POST['btn_submitComics']))
 			{
@@ -45,18 +53,21 @@ class Controller
 				"acct_id" => $_SESSION['acct_id'],
 				"post_date" => date("Y-m-d H:i:s")
 				];
+				$this->console('wewew');
 				$this->model->insertNewPost($post);
+				$this->console('wew');
 				echo "<script>window.location.href = '/linist/'</script>";
 			}
 
 			if (isset($_POST['btn_editComics'])) 
 			{
 				$edit_post = [
-				"id" => $_POST['editid'],
+				"id" => $_POST['edit_id'],
 				"title" => $_POST['edit_title'],
 				"descript" => $_POST['edit_desc'],
 				"imgLink" => $_POST['edit_img']
 				];
+				$this->console("".$_POST['edit_id']."");
 				$this->model->editPost($_SESSION['acct_id'], $edit_post);
 				echo "<script>window.location.href = '/linist/'</script>";
 			}
@@ -180,10 +191,44 @@ class Controller
 
 	}
 
-	function account($id)
+	function account($id, $getCond)
 	{
-		$account = $this->model->getRowData('accounts',$id);
-		$profile = $this->model->getRowData('profiles',$id);		
+		$account = $this->model->getRowData('accounts', $id);
+		$profile = $this->model->getRowData('profiles', $id);
+		$posts = $this->model->getAccountPosts($id);
+
+		$posts_arr = [];
+		while($row = mysqli_fetch_assoc($posts))
+		{
+			$posts_arr[] = $row;
+		}
+		$posts_arr = array_reverse($posts_arr);
+
+		$get = $getCond;
+		$flag = 0;
+		$img = '';
+		$title = '';
+		$desc = '';
+		foreach ($posts_arr as $post) 
+		{
+			if($get)
+			{
+				if($flag==$_GET['page'])
+				{
+					$img = $post['imgLink'];
+					$title = $post['title'];
+					$desc = $post['descript'];
+					$date = $post['post_date'];
+					break;
+				}
+			}
+			else
+			{
+				header('location: /linist/'.$account['username']."?page=".$flag);
+				break;
+			}
+			$flag++;
+		}
 		include('view/profile.php');
 	}
 

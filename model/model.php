@@ -81,11 +81,12 @@ class Model
 		$sql = "INSERT INTO tbl_posts (descript, title, post_date, imgLink, acct_id) values ('".$post['descript']."','".$post['title']."', '".$post['post_date']."', '".$post['imgLink']."', '".$post['acct_id']."')";
 		if(mysqli_query($db, $sql))
 		{
-			echo "<script>alert('Posted successfully.');</script>";
 		}
 		else
 		{
-			echo "<script>alert('www.');</script>";
+			$error = $db->errno;
+		    echo "<script>console.log('$error');</script>";
+
 		}
 		$this->closeDB($db);
 	}
@@ -99,11 +100,17 @@ class Model
 		return $result;
 	}
 
-	function editPosts($id, $edit)
+	function editPost($acct_id, $edit)
 	{
 		$db = $this->connectDB();
-		// CONTINUE HERE
-		$sql = "UPDATE tbl_posts SET descript='";
+		$sql = "UPDATE tbl_posts SET descript='".$edit['descript']."', title='".$edit['title']."', imgLink='".$edit['imgLink']."' WHERE id=".$edit['id']." AND acct_id=".$acct_id;
+		if(mysqli_query($db, $sql))
+		{
+		}
+		else
+		{
+			echo "<script>alert('wrong') </script>";
+		}
 		$this->closeDB($db);
 
 	}

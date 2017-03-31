@@ -24,61 +24,231 @@
 	<!-- Font Awesome CDN -->
 	<script src="https://use.fontawesome.com/4a55acc96a.js"></script>
 
+	<style type="text/css">
+		.container-fluid
+		{
+			padding: 0px; 
+			background: white;
+		}
+
+		.content
+		{
+			margin: 0 150px;
+		}
+
+		.content > .row
+		{
+			position: relative;
+		}
+
+		main .content #profileImgBorder
+		{
+			position: absolute; 
+			top: 50%; 
+			left: 50%; 
+			transform: translate(-50%,-65%); 
+			padding: 5px; 
+			border-radius: 4px; 
+			border: 1px solid #eeefff; 
+			border-radius: 4px; 
+			background-color: white;
+		}
+
+		main .content #profileImg
+		{
+			background: url(<?= $profile['profile_img_link'] ?>) center/cover no-repeat; 
+			height: 150px; 
+			width: 150px; 
+			border-radius: 4px;
+		}
+
+		.content > .row:nth-of-type(2) > div:first-child
+		{
+			margin-top: 60px;
+		}
+
+		.content > .row:nth-of-type(2) > div:first-child h1
+		{
+			font-weight: bold; 
+			color: #4f4f4f;
+		}
+
+		.content li
+		{
+			list-style: none;
+		}
+
+		.content li ul
+		{
+			display: inline-block; 
+			margin: 0 5px; 
+			background-color: #8f8f8f; 
+			color: #cecece; 
+			font-weight: bold; 
+			border-radius: 4px; 
+			padding: 3px 6px;
+		}
+
+		.content #comic-div
+		{
+			border: 1px solid #cecece; 
+			margin-top: 25px;
+			padding: 50px 0;
+		}
+
+		.content #comic-div > div:first-child
+		{
+			padding: 15px 30px;
+		}
+
+		.content #comic-div > div:first-child > img
+		{
+			height: auto; 
+			max-width: 100%;
+			margin-bottom: 50px;
+		}
+
+		.content #comic-div > div:first-child > *
+		{
+			color: black;
+		}
+
+		.content #comic-div > div:first-child > form 
+		{
+			margin-top: 20px;
+			font-size: 30px; 
+			padding: 15px 0;
+		}
+
+		.content #comic-div > div:first-child > form > *
+		{
+			padding: 0 40px; 
+			font-weight: bold;
+		}
+
+		.content #author-div
+		{
+			border: 1px solid #cecece;
+			border-top: 0; 
+			padding: 10px 0; 
+			overflow: hidden;
+		}
+
+		.content #author-div #profileImg2
+		{
+			background: url(<?= $profile['profile_img_link'] ?>) center/cover no-repeat; 
+			height: 150px;
+			border: 1px solid #cecece;
+		}
+
+		.content #author-div .col-lg-9
+		{
+			padding: 20px 10px;
+		}
+
+		.content #author-div .col-lg-9 p
+		{
+			color: grey;
+		}
+
+		.content #author-div .col-lg-9 p h4
+		{
+			margin: 10px 0
+		}
+
+		.content #author-div .col-lg-9 p h4
+		{
+			margin: 5px 0 0;
+		}
+
+
+
+
+	</style>
+
 </head>
 <body>
 
-<main class="container-fluid" style="padding: 0px; background: white;">
-	<div style="background: url(http://hd-wall-papers.com/download.php?id=1520991&w=1920&h=1200&pic=/images/wallpapers/comic-hd-wallpaper/comic-hd-wallpaper-9.jpg) center/cover no-repeat; height: 50vh;;">
+<main class="container-fluid">
+	<div style="background: url(http://hd-wall-papers.com/download.php?id=1520991&w=1920&h=1200&pic=/images/wallpapers/comic-hd-wallpaper/comic-hd-wallpaper-9.jpg) center/cover no-repeat; height: 50vh;">
 		
 	</div>
-	<div style="margin: 0 150px;">
-		<div class="row" style="position: relative">
-			<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-65%); padding: 5px; border-radius: 4px; border: 1px solid #eeefff; border-radius: 4px; background-color: white;">
-				<div style="background: url(<?= $profile['profile_img_link'] ?>) center/cover no-repeat; height: 150px; width: 150px; border-radius: 4px; ">
+	<div class="content">
+		<div class="row">
+			<div id="profileImgBorder">
+				<div id="profileImg">
 				</div>				
 			</div>
 		</div>
 		<div class="row">
-			<div class='text-center' style="margin-top: 60px;">
-				<h1 style="font-weight: bold; color: #4f4f4f;"><?= $profile['series'] ?></h1>
+			<div class='text-center'>
+				<h1><?= $profile['series'] ?></h1>
 			</div>
 			<div class="text-center">
-				<li style="list-style: none">
-					<ul style="display: inline-block; list-style: none; margin: 0 5px; background-color: #8f8f8f; color: #cecece; font-weight: bold; border-radius: 4px; padding: 3px 6px;">Archives</ul>
-					<!-- <ul style="display: inline-block; list-style: none; padding: 0 10px; background-color: #8f8f8f; color: #cecece; font-weight: bold; border-radius: 4px; padding: 3px 6px;">Dashboard</ul> -->
-					<ul style="display: inline-block; list-style: none; margin: 0 5px; background-color: #8f8f8f; color: #cecece; font-weight: bold; border-radius: 4px; padding: 3px 6px;">Follow</ul>
+				<li>
+					<ul>Archives</ul>
+					<ul>Dashboard</ul>
+					<ul>Follow</ul>
 				</li>
 			</div>
 		</div>
-		<div class="row" style="border: 1px solid #cecece; margin: 20px 0;">
-			<div class="text-center" style="padding: 15px 30px">
-				<img src="http://files.explosm.net/comics/Dave/magiclamp.png" style="height: auto; max-width: 100%;">
-				<h3 style="color: black;">Magic Lamp</h3>
-				<p style="color: black;">Descript</p>
-				<div style="color: black; font-size: 30px; padding: 5px 0">
-					<span class="glyphicon glyphicon-menu-left" style="padding: 0 40px; font-weight: bold;"></span>
-					<i class="fa fa-random" aria-hidden="true" style="padding: 0 40px; font-weight: bold;"></i>
-					<span class="glyphicon glyphicon-menu-right" style="padding: 0 40px; font-weight: bold;"></span>
+		<div class="row" id="comic-div">
+			<div class="text-center">
+				<img src="<?= $img ?>">
+				<h3><?= $title ?></h3>
+				<p><?= $desc ?></p>
+				<form style="POST">
+					<!-- add conditionals here -->
+					<a><button type="submit" style="background: transparent; border: 0"><span class="glyphicon glyphicon-menu-left" title="Next Comic" name='btn_next'></span></button></a>
+					<a><button type="submit" style="background: transparent; border: 0"><i class="fa fa-random" aria-hidden="true" title="Random Comic" name='btn_rand'></i></button></a>
+					<a><button type="submit" style="background: transparent; border: 0"><span class="glyphicon glyphicon-menu-right" title="Previous Comic" name='btn_prev'></span></button></a>
+				</form>
+			</div>
+		</div>
+		<div class="row" id="author-div">
+			<div class="col-lg-2">
+				<div id="profileImg2">
 				</div>
 			</div>
-			<div style="border-top: 1px solid #cecece; padding: 10px 0; overflow: hidden;">
-				<div class="col-lg-2">
-					<div style="background: url(<?= $profile['profile_img_link'] ?>) center/cover no-repeat; height: 150px;">
-					</div>
-				</div>
-				<div class="col-lg-9" style="padding: 20px 10px">
-					<p style="color: grey">Date</p>
-					<!-- <h3 style="margin: 10px 0 5px"><?= $account['fullname'] ?></h3> -->
-					<h4 style="margin: 10px 0">Created by: <?= $account['username'] ?></h4>
-					<h5 style="margin: 5px 0 0"><em>"<?= $profile['descript'] ?>"</em></h5>
-				</div>
+			<div class="col-lg-9">
+				<p><?= $date ?></p>
+				<h4>Created by: <?= $account['username'] ?></h4>
+				<h5><em>"<?= $profile['descript'] ?>"</em></h5>
+			</div>
+		</div>
+		<div class="row" style="border: 1px solid #cecece; border-top: 0; padding: 15px;">
+			<h3 style="margin: 0">Comments</h3>
+			<div style="margin: 15px 15px 10px 15px; border-bottom: 1px solid #cecece">
+				<h4>Names <small>Date</small></h4>
+				<p style="margin-bottom: 2px">I like your comic. Keep it up.</p>
+			</div>
+			<div style="margin: 15px 15px 10px 60px; border-bottom: 1px solid #cecece">
+				<h4>Names <small>Date</small></h4>
+				<p style="margin-bottom: 2px">I like your comic. Keep it up.</p>
+			</div>
+			<div style="margin: 15px 15px 10px 15px; border-bottom: 1px solid #cecece">
+				<h4>Names <small>Date</small></h4>
+				<p style="margin-bottom: 2px">I like your comic. Keep it up.</p>
 			</div>
 		</div>
 		<div class="row">
-			
+			<form method="POST" style="padding: 15px; border: 1px solid #cecece; border-top: 0">
+				<!-- <label>Enter Your Comment:</label><br> -->
+				<label>Logged in as: <?= $_SESSION['username'] ?> </label><br>
+				<textarea style="resize: none;" rows="5" cols="100" maxlength="1000" placeholder="Comment..." ></textarea>
+				<input type="submit" name="btn_submitComics" class="btn btn-default" style="margin-bottom: 25px; margin-left: 15px">
+			</form>
 		</div>
 	</div>
 </main>
+
+
+<div>
+	<?php include('view/footer.php'); ?>
+</div>
+
+<script type="text/javascript">
+</script>
 
 </body>
 </html>

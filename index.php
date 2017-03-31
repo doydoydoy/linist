@@ -59,14 +59,39 @@ switch ($uri) {
 	case $index."logout":
 		$controller->logout();
 		break;
+
+	case $index."profile":
+		if(isset($_SESSION['username']))
+		{
+			while ($row = mysqli_fetch_assoc($result)) 
+				{
+					if($row['username']==$_SESSION['username'])
+					{
+						header('location: /linist/'.$row['username']);
+					}
+				}
+		}
+		else
+		{
+			echo "<h1>page not found</h1>";
+		}
+		break;		
 	
 	default:
 		while ($row = mysqli_fetch_assoc($result)) 
 		{
 			if($index.$row['username']==$uri)
 			{
-				$controller->account($row['id']);
-				$x = true;
+				if (isset($_GET['page'])) 
+				{
+					$controller->account($row['id'], true);
+					$x=true;
+				}
+				else
+				{
+					$controller->account($row['id'], false);
+					$x=true;
+				}
 			}
 		}
 		if($x==false)
