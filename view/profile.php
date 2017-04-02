@@ -24,6 +24,9 @@
 	<!-- Font Awesome CDN -->
 	<script src="https://use.fontawesome.com/4a55acc96a.js"></script>
 
+	<!-- My Media Query for Profile.php -->
+	<link href="res/css/media-profile.css" rel="stylesheet">
+
 	<style type="text/css">
 		.container-fluid
 		{
@@ -122,7 +125,7 @@
 
 		.content #comic-div > div:first-child > form > *
 		{
-			padding: 0 40px; 
+			margin: 0 40px;
 			font-weight: bold;
 		}
 
@@ -170,7 +173,7 @@
 <body>
 
 <main class="container-fluid">
-	<div style="background: url(http://hd-wall-papers.com/download.php?id=1520991&w=1920&h=1200&pic=/images/wallpapers/comic-hd-wallpaper/comic-hd-wallpaper-9.jpg) center/cover no-repeat; height: 50vh;">
+	<div style="background: url(http://argentaplus.com.ar/wp-content/uploads/2016/01/06.jpg) center/cover no-repeat; height: 50vh;">
 		
 	</div>
 	<div class="content">
@@ -185,11 +188,38 @@
 				<h1><?= $profile['series'] ?></h1>
 			</div>
 			<div class="text-center">
-				<li>
-					<ul>Archives</ul>
-					<ul>Dashboard</ul>
-					<ul>Follow</ul>
-				</li>
+				<form>
+					<li>
+						<a href="/linist/jonathan?archives=true"><ul>Archives</ul></a>
+						<input type="hidden" name="username" value="<?= $account['username'] ?>">
+						<?php 
+						if(isset($_SESSION['acct_id']))
+						{
+							if($account['id']!=$_SESSION['acct_id'])
+							{
+								$flw_flag = false;
+								while($follow = mysqli_fetch_assoc($follows))
+								{
+									if($follow['follower_id']==$_SESSION['acct_id'])
+									{
+										?>
+						<button style="background: transparent; border: 0;" name="btn_unfollow"><ul id="unfollow">Unfollow</ul></button>
+										<?php
+										$flw_flag = true;
+									}
+
+								}
+								if(!$flw_flag)
+								{
+									?>
+						<button style="background: transparent; border: 0;" name="btn_follow"><ul>Follow</ul></button>
+									<?php
+								}
+							}							
+						}
+						?>
+					</li>
+				</form>
 			</div>
 		</div>
 		<div class="row" id="comic-div">
@@ -197,26 +227,57 @@
 				<img src="<?= $img ?>">
 				<h3><?= $title ?></h3>
 				<p><?= $desc ?></p>
-				<form style="POST">
+				<form method="POST">
 					<!-- add conditionals here -->
-					<a><button type="submit" style="background: transparent; border: 0"><span class="glyphicon glyphicon-menu-left" title="Next Comic" name='btn_next'></span></button></a>
-					<a><button type="submit" style="background: transparent; border: 0"><i class="fa fa-random" aria-hidden="true" title="Random Comic" name='btn_rand'></i></button></a>
-					<a><button type="submit" style="background: transparent; border: 0"><span class="glyphicon glyphicon-menu-right" title="Previous Comic" name='btn_prev'></span></button></a>
+					<?php
+
+					if (isset($_GET['page'])&&$_GET['page']==0) 
+					{
+						?>
+					<a><span class="glyphicon glyphicon-menu-left" style="visibility: hidden;"></span></a>
+						<?php
+					}
+					else
+					{
+						?>
+					<a href="/linist/<?= $account['username'].'?page='.($_GET['page']-1) ?>"><span class="glyphicon glyphicon-menu-left" title="Next Comic" name='btn_next'></span></a>
+						<?php
+					}
+					?>
+					<button type="submit" style="background: transparent; border: 0;" name="btn_rand"><i class="fa fa-random" aria-hidden="true" title="Random Comic"></i></button>
+
+					<?php
+
+					if ($_GET['page']==$post_ctr-1) 
+					{ 
+						?>
+					<a><span class="glyphicon glyphicon-menu-right" style="visibility: hidden;"></span></a>
+						<?php
+					}
+					else
+					{
+						?>
+					<a href="/linist/<?= $account['username'].'?page='.($_GET['page']+1) ?>"><span class="glyphicon glyphicon-menu-right" title="Previous Comic" name='btn_prev'></span></a>
+						<?php
+					}
+
+					?>
+
 				</form>
 			</div>
 		</div>
 		<div class="row" id="author-div">
-			<div class="col-lg-2">
+			<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 				<div id="profileImg2">
 				</div>
 			</div>
-			<div class="col-lg-9">
+			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-9">
 				<p><?= $date ?></p>
 				<h4>Created by: <?= $account['username'] ?></h4>
 				<h5><em>"<?= $profile['descript'] ?>"</em></h5>
 			</div>
 		</div>
-		<div class="row" style="border: 1px solid #cecece; border-top: 0; padding: 15px;">
+		<!-- <div class="row" style="border: 1px solid #cecece; border-top: 0; padding: 15px;">
 			<h3 style="margin: 0">Comments</h3>
 			<div style="margin: 15px 15px 10px 15px; border-bottom: 1px solid #cecece">
 				<h4>Names <small>Date</small></h4>
@@ -233,12 +294,11 @@
 		</div>
 		<div class="row">
 			<form method="POST" style="padding: 15px; border: 1px solid #cecece; border-top: 0">
-				<!-- <label>Enter Your Comment:</label><br> -->
 				<label>Logged in as: <?= $_SESSION['username'] ?> </label><br>
 				<textarea style="resize: none;" rows="5" cols="100" maxlength="1000" placeholder="Comment..." ></textarea>
 				<input type="submit" name="btn_submitComics" class="btn btn-default" style="margin-bottom: 25px; margin-left: 15px">
 			</form>
-		</div>
+		</div> -->
 	</div>
 </main>
 
@@ -246,9 +306,6 @@
 <div>
 	<?php include('view/footer.php'); ?>
 </div>
-
-<script type="text/javascript">
-</script>
 
 </body>
 </html>

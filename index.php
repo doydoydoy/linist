@@ -87,6 +87,11 @@ switch ($uri) {
 					$controller->account($row['id'], true);
 					$x=true;
 				}
+				elseif(isset($_GET['archives'])&&$_GET['archives']==true)
+				{
+					$controller->archives($row['id']);
+					$x=true;
+				}
 				else
 				{
 					$controller->account($row['id'], false);

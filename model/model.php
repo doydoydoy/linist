@@ -69,6 +69,7 @@ class Model
 		if(mysqli_query($db, $sql))
 		{
 			mysqli_query($db, "INSERT INTO tbl_profiles(acct_id) values (".$db->insert_id.")");
+			mysqli_query($db, "INSERT INTO tbl_follows(follower_id, following_id) values (1, ".$db->insert_id.") ");
 			echo "<script>alert('Successfully registered.');</script>";
 			echo "<script>window.location.href = 'login'</script>";
 		}
@@ -103,7 +104,14 @@ class Model
 	function editPost($acct_id, $edit)
 	{
 		$db = $this->connectDB();
-		$sql = "UPDATE tbl_posts SET descript='".$edit['descript']."', title='".$edit['title']."', imgLink='".$edit['imgLink']."' WHERE id=".$edit['id']." AND acct_id=".$acct_id;
+		if($acct_id==1)
+		{
+			$sql = "UPDATE tbl_posts SET descript='".$edit['descript']."', title='".$edit['title']."', imgLink='".$edit['imgLink']."' WHERE id=".$edit['id'];
+		}
+		else
+		{
+			$sql = "UPDATE tbl_posts SET descript='".$edit['descript']."', title='".$edit['title']."', imgLink='".$edit['imgLink']."' WHERE id=".$edit['id']." AND acct_id=".$acct_id;
+		}
 		if(mysqli_query($db, $sql))
 		{
 		}
@@ -115,23 +123,60 @@ class Model
 
 	}
 
+	function deletePost($acct_id, $del_id)
+	{
+		$db = $this->connectDB();
+		$sql = "DELETE FROM tbl_posts WHERE id=$del_id";
+		if(mysqli_query($db, $sql))
+		{
+		}
+		else
+		{
+			echo "<script>alert('wrong') </script>";
+		}
+		$this->closeDB($db);
+	}
 
+	function getFollowing($id)
+	{
+		$db = $this->connectDB();
+		$sql = "SELECT * FROM tbl_follows WHERE follower_id=$id";
+		$result = mysqli_query($db, $sql);
+		$this->closeDB($db);
+		return $result;
+	}
 
+	function getFollowingList($id)
+	{
+		$db = $this->connectDB();
+		$sql = "SELECT * FROM tbl_follows INNER JOIN tbl_accounts ON tbl_follows.following_id=tbl_accounts.id INNER JOIN tbl_profiles ON tbl_accounts.id=tbl_profiles.acct_id WHERE tbl_follows.follower_id=$id";
+		$result = mysqli_query($db, $sql);
+		$this->closeDB($db);
+		return $result;
+	}
 
+	function getFollowerList($id)
+	{
+		$db = $this->connectDB();
+		$sql = "SELECT * FROM tbl_follows INNER JOIN tbl_accounts ON tbl_follows.following_id=tbl_accounts.id INNER JOIN tbl_profiles ON tbl_accounts.id=tbl_profiles.acct_id WHERE tbl_follows.following_id=$id";
+		$result = mysqli_query($db, $sql);
+		$this->closeDB($db);
+		return $result;	
+	}
 
 
 
 	/** Now working but getRowData is much more flexible **/
 
-	// function getProfileData($id)
-	// {
-	// 	$sql = "SELECT *.* FROM tbl_accounts INNER JOIN tbl_profiles ON tbl_accounts.id=tbl_profiles.acct_id  WHERE id='".$id"'";
-	// 	$conn = $this->connectDB();
-	// 	$result = mysqli_query($conn, $sql);
-	// 	$this->closeDB($conn);
-	// 	echo "<script>console.log(".print_r($result).")</script>";
-	// 	return $result;
-	// }
+	function getJoinData()
+	{
+		$conn = $this->connectDB();
+		$sql = "SELECT * FROM tbl_accounts INNER JOIN tbl_posts ON tbl_accounts.id=tbl_posts.acct_id ORDER BY tbl_posts.post_date ASC";
+		$result = mysqli_query($conn, $sql);
+		$this->closeDB($conn);
+		// echo "<script>console.log(".print_r($result).")</script>";
+		return $result;
+	}
 
 
 

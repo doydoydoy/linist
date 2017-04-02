@@ -1,0 +1,15 @@
+@media screen and (max-width: 950px)
+{
+	main .content
+	{
+		margin: 0 50px !important;
+	}
+}
+
+@media screen and (max-width: 750px)
+{
+	body
+	{
+		width: 750px;
+	}
+}

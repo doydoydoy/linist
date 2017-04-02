@@ -110,6 +110,11 @@
 			color: white; 
 		}
 
+		#nav-div .mobile-nav
+		{
+			display: none;
+		}
+
 		#nav-div .dropdown > a
 		{
 			margin: 15px 0px;
@@ -188,73 +193,78 @@
 			padding: 0px 0 10px;
 		}
 
+		@media screen and (max-width: 992px)
+		{
+
+			body
+			{
+			}
+
+			main #profile-img-div
+			{
+				display: none;
+			}
+		}
+
+		@media screen and (max-width: 768px)
+		{
+			#nav-div nav #search_form, #nav-div nav .navbar-nav li
+			{
+				display: none;
+			}
+
+			#nav-div nav .navbar-nav .mobile-nav
+			{
+				display: block;
+			}
+
+			#nav-div nav .navbar-nav .mobile-nav a
+			{
+				color: white;
+			}
+
+
+			#nav-div nav .navbar-nav .mobile-nav:hover
+			{
+				background: #cecece;
+			}
+
+
+			.navbar-default .navbar-collapse, .navbar-default .navbar-form
+			{
+				border: 0;
+			}
+
+
+			main #profile-image-div
+			{
+				padding-bottom: 20px;
+			}
+
+			main #profile-image-div #profile_image
+			{
+				width: 200px;
+				height: 200px;
+				margin: auto;
+			}
+
+			main .row #home-left
+			{
+				padding: 0 20px;
+			}
+		}
+
 
 	</style>
 </head>
 <body>
 
-<div id='nav-div'>
-<nav class="navbar navbar-default container-fluid">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/linist/">
-        <span class="glyphicon glyphicon-pencil"></span> 
-        <span>linist</span>
-        </a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <form class="navbar-form pull-left">
-        <div class="input-group">
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-search "></span>
-          </span>
-          <input type="text" class="form-control" placeholder="Search Linist">
-        </div>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/linist/login" class="list">
-			<span class="glyphicon glyphicon-pushpin"></span>
-			</a>
-		</li>
-        <li><a href="#" style="margin: 0; padding: 0 15px;" class="list">
-        	<span class="glyphicon glyphicon-plus"></span>
-        	<span class="glyphicon glyphicon-triangle-bottom">
-        </a></li>
-        <li class="dropdown">
-        	<a href="#"  class="list dropdown-toggle" data-toggle='dropdown'>
-	        	<img height="20px" width="20px" style="background: url(../discover.png) center/cover no-repeat; ">
-	        	<span class="glyphicon glyphicon-triangle-bottom"></span>
-        	</a>
-			
-        	<ul class="dropdown-menu">
-        		<li>ACCOUNT</li>
-        		<li><a href="/linist/dashboard"><span class="glyphicon glyphicon-home"></span>&emsp;Dashboard</a></li>
-        		<li><a href="/linist/<?= $_SESSION['username'] ?>"><span class="glyphicon glyphicon-user"></span>&emsp;Profile</a></li>
-        		<li><a href="/linist/settings"><span class="glyphicon glyphicon-edit"></span>&emsp;Settings</a></li>
-        		<hr>
-        		<li><a href="/linist/logout"><span class="glyphicon glyphicon-log-out"></span>&emsp;Sign Out</a></li>
-        	</ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-</div>
-
+<?php include('view/header.php'); ?>
 
 <main class="container">
 <div class="row">
 
-	<div class="col-lg-3 home-left">
+	<div class="col-lg-3 col-md-3 home-left">
 		<div class="list-group" style="margin-top: 30px;">
 			<p href="" class="list-group-item" style="font-weight: bold;
 			background-color:#f2f2f2; 
@@ -268,10 +278,10 @@
 		</div>
 	</div>
 
-	<div class="col-lg-9" style="margin-top: 30px;">
+	<div class="col-lg-9 col-md-9" style="margin-top: 30px;">
 		<h2 style="margin-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; color: #444">Profile Info</h2>
 		<form method="POST" style="">
-			<div class="col-lg-7">
+			<div class="col-lg-7 col-md-7">
 				<div class="row">
 					<div>
 						<label>Fullname</label><br>
@@ -332,7 +342,7 @@
 					<input type="submit" class="btn" style="border-color: rgba(27,31,35,0.35); background-color: #e6ebf1; background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%); font-weight: bold;" name="btn_profileInfo"></input>
 				</div>
 			</div>
-			<div class="col-lg-5 ">
+			<div class="col-lg-5 col-md-5" id="profile-img-div">
 				<div style="margin: auto; width: 200px;">
 					<label>Profile Picture</label>
 					<div style="background: url(<?php 
@@ -356,6 +366,7 @@
 
 </main>
 
+<?php include('view/footer.php'); ?>
 
 </body>
 </html>

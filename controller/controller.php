@@ -24,6 +24,74 @@ class Controller
 		elseif($_SESSION['username']=="")
 		{
 			include('view/intro.php');
+		}
+		elseif ($_SESSION['role']=="admin") 
+		{
+			// Get one row data from tbl_accounts
+			// getRowData(tbl_name ie. accounts|profiles|posts, acct_id);
+			$account = $this->model->getRowData('accounts', $_SESSION['acct_id']);
+			$profile = $this->model->getRowData('profiles', $_SESSION['acct_id']);
+			// Function to get joined row data for table posts and accounts
+			$posts = $this->model->getJoinData();
+			$followed = $this->model->getFollowingList($_SESSION['acct_id']);
+			$follower = $this->model->getFollowerList($_SESSION['acct_id']);
+
+			$posts_arr = [];
+			while($row = mysqli_fetch_assoc($posts))
+			{
+				$posts_arr[] = $row;
+			}
+			$posts_arr = array_reverse($posts_arr, true);
+
+			$followed_arr = [];
+			while($row = mysqli_fetch_assoc($followed))
+			{
+				$followed_arr[] = $row;
+			}
+			$follower_arr = [];
+			while($row = mysqli_fetch_assoc($follower))
+			{
+				$follower_arr[] = $row;
+			}
+			// print_r($followed_arr);
+			// print_r($follower_arr);
+
+
+			include('view/admin-home.php');
+			if(isset($_POST['btn_submitComics']))
+			{
+				$post = [
+				"title" => $_POST['comicTitle'],
+				"descript" => $_POST['comicDesc'],
+				"imgLink" => $_POST['comicImg'],
+				"acct_id" => $_SESSION['acct_id'],
+				"post_date" => date("Y-m-d H:i:s")
+				];
+				$this->console('wewew');
+				$this->model->insertNewPost($post);
+				$this->console('wew');
+				echo "<script>window.location.href = '/linist/'</script>";
+			}
+
+			if (isset($_POST['btn_editComics'])) 
+			{
+				$edit_post = [
+				"id" => $_POST['edit_id'],
+				"title" => $_POST['edit_title'],
+				"descript" => $_POST['edit_desc'],
+				"imgLink" => $_POST['edit_img']
+				];
+				$this->console("".$_POST['edit_id']."");
+				$this->model->editPost($_SESSION['acct_id'], $edit_post);
+				echo "<script>window.location.href = '/linist/'</script>";
+			}
+
+			if (isset($_POST['btn_delComics']))
+			{
+				$del_post = $_POST['del_id'];
+				$this->model->deletePost($_SESSION['acct_id'], $del_post);
+				echo "<script>window.location.href = '/linist/'</script>";
+			}
 		} 
 		else
 		{
@@ -34,7 +102,8 @@ class Controller
 			// Get row data from tbl_profiles
 			$profile = $this->model->getRowData('profiles', $_SESSION['acct_id']);
 			$posts = $this->model->getAccountPosts($_SESSION['acct_id']);
-			
+			$followed = $this->model->getFollowingList($_SESSION['acct_id']);
+			$follower = $this->model->getFollowerList($_SESSION['acct_id']);
 			$posts_arr = [];
 			while($row = mysqli_fetch_assoc($posts))
 			{
@@ -42,6 +111,20 @@ class Controller
 			}
 			$posts_arr = array_reverse($posts_arr, true);
 
+			$followed_arr = [];
+			while($row = mysqli_fetch_assoc($followed))
+			{
+				$followed_arr[] = $row;
+			}
+
+			$follower_arr = [];
+			while($row = mysqli_fetch_assoc($follower))
+			{
+				$follower_arr[] = $row;
+			}
+			// print_r($followed_arr);
+			// echo "<br><br>";
+			// print_r($follower_arr);
 
 			include('view/home.php');
 			if(isset($_POST['btn_submitComics']))
@@ -72,6 +155,13 @@ class Controller
 				echo "<script>window.location.href = '/linist/'</script>";
 			}
 
+			if (isset($_POST['btn_delComics']))
+			{
+				$del_post = $_POST['del_id'];
+				$this->model->deletePost($_SESSION['acct_id'], $del_post);
+				echo "<script>window.location.href = '/linist/'</script>";
+			}
+
 		}		
 	}
 
@@ -88,7 +178,6 @@ class Controller
 
 			while($row = mysqli_fetch_assoc($accounts)) 
 			{
-				$this->console('ooo');
 				if($row['username']==$username && $row['password'] == $password)
 				{
 					$_SESSION['acct_id']=$row['id'];
@@ -118,6 +207,7 @@ class Controller
 				if (!($username=="")&&!(substr($username, 0, 0)==" ")) 
 				{
 					$this->model->insertNewAccount($username, $sha_pass, $role, $fullname);
+					// Function for admin to follow new users
 					session_destroy();
 				}
 				else
@@ -196,6 +286,7 @@ class Controller
 		$account = $this->model->getRowData('accounts', $id);
 		$profile = $this->model->getRowData('profiles', $id);
 		$posts = $this->model->getAccountPosts($id);
+		$follows = $this->model->getFollowing($id);
 
 		$posts_arr = [];
 		while($row = mysqli_fetch_assoc($posts))
@@ -204,32 +295,45 @@ class Controller
 		}
 		$posts_arr = array_reverse($posts_arr);
 
-		$get = $getCond;
-		$flag = 0;
+		$post_ctr = 0;
 		$img = '';
 		$title = '';
 		$desc = '';
 		foreach ($posts_arr as $post) 
 		{
-			if($get)
+			if($getCond)
 			{
-				if($flag==$_GET['page'])
+				if($post_ctr==$_GET['page'])
 				{
 					$img = $post['imgLink'];
 					$title = $post['title'];
 					$desc = $post['descript'];
 					$date = $post['post_date'];
-					break;
 				}
 			}
 			else
 			{
-				header('location: /linist/'.$account['username']."?page=".$flag);
+				echo "<script>window.location.href='/linist/".$account['username']."?page=0'</script>";
 				break;
 			}
-			$flag++;
+			$post_ctr++;
 		}
+
+
+
+
 		include('view/profile.php');
+
+		// Function to open random comic page of the same author
+		if(isset($_POST['btn_rand']))
+		{
+			$rand = rand(0, $post_ctr-1);
+			while($rand == $_GET['page'])
+			{
+				$rand = rand(0, $post_ctr-1);
+			}
+			echo "<script>window.location.href='/linist/".$account['username']."?page=".$rand."'</script>";
+		}
 	}
 
 
@@ -277,7 +381,6 @@ class Controller
 		$result = $this->model->getTableData('accounts');
 		return $result;
 	}
-
 
 	// Use only for debugging
 	function console($text)

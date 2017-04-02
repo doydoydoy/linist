@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
 	<title>Linist</title>
 
 	<!-- Ubuntu Font -->
@@ -27,8 +24,7 @@
 	<!-- Font Awesome CDN -->
 	<script src="https://use.fontawesome.com/4a55acc96a.js"></script>
 
-	<!-- My Media Query CSS -->
-	<link rel="stylesheet" href="res/css/media-query.css">
+
 
 
 	<style type="text/css">
@@ -47,15 +43,10 @@
 		{
 			background-color: #161616; 
 			padding: 0px 5px 0 5px; 
-			height: 51px; 
+			height: 50px; 
 			/*position: absolute; */
 			width: 100%;
 			/*z-index: 1;*/
-		}
-
-		#nav-div > nav
-		{
-			/*height: 50px;*/
 		}
 
 		#nav-div .navbar
@@ -125,7 +116,6 @@
 		{
 			display: none;
 		}
-
 
 		#nav-div .dropdown > a
 		{
@@ -205,24 +195,24 @@
 			padding: 0;
 		}
 
-		main #home-left > div:first-child
+		main .home-left > div:first-child
 		{
 			border-radius: 5px; 
 			overflow: hidden;
 		}
 
-		main #home-left > div:first-child > div
+		main .home-left > div:first-child > div
 		{
 			height: 230px;
 			width: 100%;		
 		}
 
-		main #home-left h1, main #home-left h3, main #home-left h5
+		main .home-left h1, main .home-left h3, main .home-left h5
 		{
 			margin: 5px 0;
 		}
 
-		main #home-left > div:last-child
+		main .home-left > div:last-child
 		{
 			margin: 15px 0;
 			border-top: 1px solid #cecece; 
@@ -230,17 +220,11 @@
 			padding: 10px 0;
 		}
 
-		main #home-left .fa
+		main .home-left .fa
 		{
 			margin-right: 10px;
 			margin-top: 5px;
 		} 
-
-		main #home-right .nav-tabs li a
-		{
-			padding: 15px 20px; 
-			display: inline-block;
-		}
 
 
 	</style>
@@ -254,8 +238,8 @@
 <main class="container">
 	<div class="row">
 
-		<div class="col-lg-3 col-md-3 col-sm-3" id="home-left">
-			<div id="profile-image-div">
+		<div class="col-lg-3 home-left">
+			<div>
 				<div style="background: url(<?php 
 							if (is_null($profile['profile_img_link'])||empty($profile['profile_img_link'])||!isset($profile['profile_img_link']))
 							{
@@ -310,34 +294,34 @@
 			</div>
 		</div>
 
-		<div class="col-lg-9 col-md-9 col-sm-9" id="home-right">
+		<div class="col-lg-9">
 			<div style="width: 100%; /* border-right: 1px solid #e3e5e8; */">
 				<div style="padding: 0 10px;">
 
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active">
-							<a href="#overview-tab" aria-controls="overview" role="tab" data-toggle="tab"  style="">
+							<a href="#overview-tab" aria-controls="overview" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
 								Overview
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#comics-tab" aria-controls="myComics" role="tab" data-toggle="tab"  style="">
+							<a href="#comics-tab" aria-controls="myComics" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
 								My Comics
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#submit-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="">
+							<a href="#submit-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
 								Submit Comics
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#followers-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="">
+							<a href="#followers-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
 								Followers
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#following-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="">
+							<a href="#following-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
 								Following
 							</a>
 						</li>
@@ -350,28 +334,35 @@
 								<h3>Latest Posts</h3>
 								
 								<?php
-									$flag = 1;
+									$flag = [];
+									$ctr = 1;
 									foreach($posts_arr as $post)
 									{
+										if(empty($flag[$post["username"]])||is_null($flag[$post["username"]])||!isset($flag[$post["username"]]))
+										{
+											$flag[$post['username']]=0;
+										}
 										$modalId="Latest".$post['id'];
 										?>
 										<div style="padding: 5px 15px; border-bottom: 1px solid #cecece">
-											<a style="text-decoration: none; color: black;" href="/linist/<?= $_SESSION['username'].'?page='.$flag; ?>"><?= $post['title'] ?></a>
+											<a style="text-decoration: none; color: black;" href="/linist/<?= $post['username'].'?page='.$flag[$post['username']]; ?>"><?= $post['title'] ?></a>
 											<input type="button" name="btn_delete" value="Delete" class="pull-right" style="background: transparent; border: 0; margin: 0; padding: 0 15px" data-toggle='modal' data-target='#deleteModal<?= $modalId ?>'>
 											<input type='button' class="pull-right" value="Edit" style="background: transparent; border: none; padding: 0 15px" data-toggle='modal' data-target='#editModal<?= $modalId ?>'>
+											<label class="pull-right">by <?= $post['username'] ?></label>
 
 										</div>
 
 										<?php
 										include('view/editmodal.php');
 										include('view/deletemodal.php');
-										if($flag==5)
+										$flag[$post['username']]++;
+										if($ctr==5)
 										{
 											break;
 										}
 										else
 										{
-											$flag++;
+											$ctr++;
 										}
 
 									}
@@ -402,23 +393,29 @@
 						<div role="tabpanel" class="tab-pane fade" id="comics-tab">
 							<h3><?= $profile['series'] ?></h3>
 							<?php
-								$flag = 1;
+								$flag = [];
 								foreach($posts_arr as $post)
 									{
 										$modalId=$post['id'];
+										if(empty($flag[$post["username"]])||is_null($flag[$post["username"]])||!isset($flag[$post["username"]]))
+										{
+											$flag[$post['username']]=0;
+										}
 										?>
 											<div style="padding: 5px 15px; border-bottom: 1px solid #cecece">
 													<span>
-														<a style="text-decoration: none; color: black;" href="/linist/<?= $_SESSION['username'].'?page='.$flag; ?>"><?= $post['title'] ?></a>
+														<a style="text-decoration: none; color: black;" href="/linist/<?= $post['username'].'?page='.$flag[$post['username']]; ?>"><?= $post['title'] ?></a>
 													</span>
 													<input type="button" name="btn_delete" value="Delete" class="pull-right" style="background: transparent; border: 0; margin: 0; padding: 0 15px" data-toggle='modal' data-target='#deleteModal<?= $modalId ?>'>
 													<input type='button' class="pull-right" value="Edit" style="background: transparent; border: none; padding: 0 15px;" data-toggle='modal' data-target='#editModal<?= $modalId ?>'>
+													<label class="pull-right">by <?= $post['username'] ?></label>
+
 
 											</div>
 							<?php		
 										include('view/deletemodal.php');
 										include('view/editmodal.php');
-										$flag++;
+										$flag[$post['username']]++;
 									}
 
 							?>
@@ -493,6 +490,7 @@
 								}
 							}	
 							?>
+
 						</div>
 
 					</div>

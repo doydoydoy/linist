@@ -230,7 +230,7 @@
   </div>
 </section>
 
-<section style="height: 100vh" id="discover">
+<!-- <section style="height: 100vh" id="discover">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
@@ -245,7 +245,7 @@
     </div>
   </div>
 </section>
-
+ -->
 
 </body>
 </html>

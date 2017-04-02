@@ -1,0 +1,80 @@
+@media screen and (max-width: 992px)
+{
+	.container
+	{
+		width: 96%;
+	}
+}
+
+@media screen and (max-width: 875px)
+{
+	body
+	{
+		width: 875px;
+	}
+}
+
+@media screen and (max-width: 768px)
+{
+	body
+	{
+		width: initial;
+	}
+}
+
+
+@media screen and (max-width: 768px)
+{
+	#nav-div nav #search_form, #nav-div nav .navbar-nav li
+	{
+		display: none;
+	}
+
+	#nav-div nav .navbar-nav .mobile-nav
+	{
+		display: block;
+	}
+
+	#nav-div nav .navbar-nav .mobile-nav a
+	{
+		color: white;
+	}
+
+
+	#nav-div nav .navbar-nav .mobile-nav:hover
+	{
+		background: #cecece;
+	}
+
+
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form
+	{
+		border: 0;
+	}
+
+
+	main #profile-image-div
+	{
+		padding-bottom: 20px;
+	}
+
+	main #profile-image-div #profile_image
+	{
+		width: 200px;
+		height: 200px;
+		margin: auto;
+	}
+
+	main .row #home-left
+	{
+		padding: 0 20px;
+	}
+}
+
+@media screen and (max-width: 660px)
+{
+	body
+	{
+		width: 660px;
+	}
+}
