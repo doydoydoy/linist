@@ -69,7 +69,7 @@ class Model
 		if(mysqli_query($db, $sql))
 		{
 			mysqli_query($db, "INSERT INTO tbl_profiles(acct_id) values (".$db->insert_id.")");
-			mysqli_query($db, "INSERT INTO tbl_follows(follower_id, following_id) values (1, ".$db->insert_id.") ");
+			mysqli_query($db, "INSERT INTO tbl_follows(follower_id, following_id) values ('1', '".$db->insert_id."') ");
 			echo "<script>alert('Successfully registered.');</script>";
 			echo "<script>window.location.href = 'login'</script>";
 		}
@@ -140,7 +140,7 @@ class Model
 	function getFollowing($id)
 	{
 		$db = $this->connectDB();
-		$sql = "SELECT * FROM tbl_follows WHERE follower_id=$id";
+		$sql = "SELECT * FROM tbl_follows WHERE following_id=$id";
 		$result = mysqli_query($db, $sql);
 		$this->closeDB($db);
 		return $result;
@@ -158,7 +158,7 @@ class Model
 	function getFollowerList($id)
 	{
 		$db = $this->connectDB();
-		$sql = "SELECT * FROM tbl_follows INNER JOIN tbl_accounts ON tbl_follows.following_id=tbl_accounts.id INNER JOIN tbl_profiles ON tbl_accounts.id=tbl_profiles.acct_id WHERE tbl_follows.following_id=$id";
+		$sql = "SELECT * FROM tbl_follows INNER JOIN tbl_accounts ON tbl_follows.follower_id=tbl_accounts.id INNER JOIN tbl_profiles ON tbl_accounts.id=tbl_profiles.acct_id WHERE tbl_follows.following_id=$id";
 		$result = mysqli_query($db, $sql);
 		$this->closeDB($db);
 		return $result;	
@@ -170,12 +170,38 @@ class Model
 
 	function getJoinData()
 	{
-		$conn = $this->connectDB();
+		$db = $this->connectDB();
 		$sql = "SELECT * FROM tbl_accounts INNER JOIN tbl_posts ON tbl_accounts.id=tbl_posts.acct_id ORDER BY tbl_posts.post_date ASC";
-		$result = mysqli_query($conn, $sql);
-		$this->closeDB($conn);
-		// echo "<script>console.log(".print_r($result).")</script>";
+		$result = mysqli_query($db, $sql);
+		$this->closeDB($db);
 		return $result;
+	}
+
+	function follow($follower_id, $following_id)
+	{
+		$db = $this->connectDB();
+		$sql = "INSERT INTO tbl_follows(follower_id, following_id) values ($follower_id, $following_id)";
+		if(mysqli_query($db, $sql))
+		{
+		}
+		else
+		{
+			echo "<script>alert('wrong') </script>";
+		}
+		$this->closeDB($db);
+	}
+
+	function unfollow($follower_id, $following_id)
+	{
+		$db = $this->connectDB();
+		$sql = "DELETE FROM tbl_follows WHERE follower_id=$follower_id AND following_id=$following_id";
+		if(mysqli_query($db, $sql))
+		{
+		}
+		else
+		{
+			echo "<script>alert('wrong') </script>";
+		}
 	}
 
 

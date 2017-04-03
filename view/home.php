@@ -470,7 +470,7 @@
 									<div style="padding: 15px 30px">
 										<a href="/linist/<?= $follow['username'] ?>"><img src="<?= $follow['profile_img_link'] ?>" height='50px' width='50px' style="margin-right: 30px"></a>
 										<label><?= $follow['fullname'] ?></label>
-										<input class="pull-right btn btn-warning" type="button" name="btn_unfollow" value="Unfollow">
+										<!-- <input class="pull-right btn btn-warning" type="button" name="btn_unfollow" value="Unfollow"> -->
 									</div>
 									<?php
 								}
@@ -484,11 +484,15 @@
 								if($follow['follower_id']==$_SESSION['acct_id'])
 								{
 									?>
-									<div style="padding: 15px 30px">
-										<a href="/linist/<?= $follow['username'] ?>"><img src="<?= $follow['profile_img_link'] ?>" height='50px' width='50px' style="margin-right: 30px"></a>
-										<label><?= $follow['fullname'] ?></label>
-										<input class="pull-right btn btn-warning" type="button" name="btn_unfollow" value="Unfollow">
-									</div>
+									<form method="POST">
+										<div style="padding: 15px 30px">
+											<a href="/linist/<?= $follow['username'] ?>"><img src="<?= $follow['profile_img_link'] ?>" height='50px' width='50px' style="margin-right: 30px"></a>
+											<label><?= $follow['fullname'] ?></label>
+											<input type="hidden" value="<?= $follow['username'] ?>" name="username"></input>
+											<input class="pull-right btn btn-warning" type="submit" name="btn_unfollow" value="Unfollow">
+										</div>
+									</form>	
+
 									<?php
 								}
 							}	

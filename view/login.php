@@ -37,8 +37,6 @@
 		body
 		{
 			background: linear-gradient(rgba(255, 255, 255, 0.6),rgba(255, 255, 255, 0.6)),url(res/img/login.jpg) center/cover no-repeat;
-			height: 100vh;
-			 
 		}
 
 		.linist-icon-div

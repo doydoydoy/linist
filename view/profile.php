@@ -36,7 +36,7 @@
 
 		.content
 		{
-			margin: 0 150px;
+			/*margin: 0 150px;*/
 		}
 
 		.content > .row
@@ -172,11 +172,13 @@
 </head>
 <body>
 
-<main class="container-fluid">
+<header>
 	<div style="background: url(http://argentaplus.com.ar/wp-content/uploads/2016/01/06.jpg) center/cover no-repeat; height: 50vh;">
-		
 	</div>
-	<div class="content">
+</header>
+
+<main class="container">
+	<div class="content col-sm-12">
 		<div class="row">
 			<div id="profileImgBorder">
 				<div id="profileImg">
@@ -188,7 +190,7 @@
 				<h1><?= $profile['series'] ?></h1>
 			</div>
 			<div class="text-center">
-				<form>
+				<form method="POST">
 					<li>
 						<a href="/linist/jonathan?archives=true"><ul>Archives</ul></a>
 						<input type="hidden" name="username" value="<?= $account['username'] ?>">
@@ -203,7 +205,7 @@
 									if($follow['follower_id']==$_SESSION['acct_id'])
 									{
 										?>
-						<button style="background: transparent; border: 0;" name="btn_unfollow"><ul id="unfollow">Unfollow</ul></button>
+						<button style="background: transparent; border: 0; width: padding:0;" name="btn_unfollow"><ul id="unfollow">Unfollow</ul></button>
 										<?php
 										$flw_flag = true;
 									}
@@ -212,7 +214,7 @@
 								if(!$flw_flag)
 								{
 									?>
-						<button style="background: transparent; border: 0;" name="btn_follow"><ul>Follow</ul></button>
+						<button style="background: transparent; border: 0; padding: 0;" name="btn_follow"><ul>Follow</ul></button>
 									<?php
 								}
 							}							

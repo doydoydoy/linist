@@ -71,10 +71,10 @@
 	}
 }
 
-@media screen and (max-width: 660px)
+@media screen and (max-width: 610px)
 {
 	body
 	{
-		width: 660px;
+		width: 610px;
 	}
 }

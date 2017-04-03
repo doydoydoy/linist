@@ -92,6 +92,22 @@ class Controller
 				$this->model->deletePost($_SESSION['acct_id'], $del_post);
 				echo "<script>window.location.href = '/linist/'</script>";
 			}
+			
+			if(isset($_POST['btn_unfollow']))
+			{	
+				$username = $_POST['username'];
+				$url = $_SERVER['REQUEST_URI'];
+				$accounts = $this->model->getTableData('accounts');
+				while($account = mysqli_fetch_assoc($accounts))
+				{
+					if($account['username']==$username)
+					{
+						$following_id = $account['id'];
+					}
+				}
+				$this->model->unfollow($_SESSION['acct_id'], $following_id);
+				echo "<script>window.location.href='$url'</script>";
+			}
 		} 
 		else
 		{
@@ -122,11 +138,9 @@ class Controller
 			{
 				$follower_arr[] = $row;
 			}
-			// print_r($followed_arr);
-			// echo "<br><br>";
-			// print_r($follower_arr);
 
 			include('view/home.php');
+
 			if(isset($_POST['btn_submitComics']))
 			{
 				$post = [
@@ -162,6 +176,21 @@ class Controller
 				echo "<script>window.location.href = '/linist/'</script>";
 			}
 
+			if(isset($_POST['btn_unfollow']))
+			{	
+				$username = $_POST['username'];
+				$url = $_SERVER['REQUEST_URI'];
+				$accounts = $this->model->getTableData('accounts');
+				while($account = mysqli_fetch_assoc($accounts))
+				{
+					if($account['username']==$username)
+					{
+						$following_id = $account['id'];
+					}
+				}
+				$this->model->unfollow($_SESSION['acct_id'], $following_id);
+				echo "<script>window.location.href='$url'</script>";
+			}
 		}		
 	}
 
@@ -319,9 +348,6 @@ class Controller
 			$post_ctr++;
 		}
 
-
-
-
 		include('view/profile.php');
 
 		// Function to open random comic page of the same author
@@ -333,6 +359,40 @@ class Controller
 				$rand = rand(0, $post_ctr-1);
 			}
 			echo "<script>window.location.href='/linist/".$account['username']."?page=".$rand."'</script>";
+		}
+
+		if(isset($_POST['btn_follow']))
+		{
+			$username = $_POST['username'];
+			// URL for page redirection
+			$url = $_SERVER['REQUEST_URI'];
+			
+			$accounts = $this->model->getTableData('accounts');
+			while($account = mysqli_fetch_assoc($accounts))
+			{
+				if($account['username']==$username)
+				{
+					$following_id = $account['id'];
+				}
+			}
+			$this->model->follow($_SESSION['acct_id'], $following_id);
+			echo "<script>window.location.href='$url'</script>";
+		}
+
+		if(isset($_POST['btn_unfollow']))
+		{
+			$username = $_POST['username'];
+			$url = $_SERVER['REQUEST_URI'];
+			$accounts = $this->model->getTableData('accounts');
+			while($account = mysqli_fetch_assoc($accounts))
+			{
+				if($account['username']==$username)
+				{
+					$following_id = $account['id'];
+				}
+			}
+			$this->model->unfollow($_SESSION['acct_id'], $following_id);
+			echo "<script>window.location.href='$url'</script>";
 		}
 	}
 

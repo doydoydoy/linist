@@ -95,6 +95,17 @@
     font-size: 15px;
   }
 
+  #nav-div .navbar-nav > li a:hover
+  {
+    color: #000;
+  }
+
+  #nav-div .navbar-nav > li:hover
+  {
+    background-color: white;
+    color: black;
+  }
+
   #nav-div .nav-or
   {
     color: #474747; font-weight: bold;  padding: 15px 0; font-size: 15px;
@@ -158,7 +169,44 @@
      width: 30vw;
   }
 
+  @media screen and (max-width: 1200px)
+  {
+    #banner .row > div
+    {
+      width: 30%;
+    }
+  }
 
+
+  @media screen and (max-width: 992px)
+  {
+    #banner .row > div
+    {
+      width: 40%;
+    }
+  }
+
+
+  @media screen and (max-width: 768px)
+  {
+    #banner .row > div
+    {
+      width: 50%;
+    }
+
+    nav #search-div, nav .navbar-nav .nav-or
+    {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 560px)
+  {
+    #banner .row > div
+    {
+      width: 75%;
+    }
+  }
 
 
   
@@ -189,7 +237,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <form class="navbar-form pull-left" >
-        <div class="input-group" >
+        <div class="input-group" id="search-div">
           <span class="input-group-addon" style="" >
             <span class="glyphicon glyphicon-search " ></span>
           </span>

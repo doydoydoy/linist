@@ -24,7 +24,8 @@
 	<!-- Font Awesome CDN -->
 	<script src="https://use.fontawesome.com/4a55acc96a.js"></script>
 
-
+	<!-- My Media Query CSS -->
+	<link rel="stylesheet" href="res/css/media-query.css">
 
 
 	<style type="text/css">
@@ -195,24 +196,24 @@
 			padding: 0;
 		}
 
-		main .home-left > div:first-child
+		main #home-left > div:first-child
 		{
 			border-radius: 5px; 
 			overflow: hidden;
 		}
 
-		main .home-left > div:first-child > div
+		main #home-left > div:first-child > div
 		{
 			height: 230px;
 			width: 100%;		
 		}
 
-		main .home-left h1, main .home-left h3, main .home-left h5
+		main #home-left h1, main #home-left h3, main #home-left h5
 		{
 			margin: 5px 0;
 		}
 
-		main .home-left > div:last-child
+		main #home-left > div:last-child
 		{
 			margin: 15px 0;
 			border-top: 1px solid #cecece; 
@@ -220,7 +221,7 @@
 			padding: 10px 0;
 		}
 
-		main .home-left .fa
+		main #home-left .fa
 		{
 			margin-right: 10px;
 			margin-top: 5px;
@@ -238,8 +239,8 @@
 <main class="container">
 	<div class="row">
 
-		<div class="col-lg-3 home-left">
-			<div>
+		<div class="col-lg-3 col-md-3 col-sm-3" id="home-left">
+			<div  id="profile-image-div">
 				<div style="background: url(<?php 
 							if (is_null($profile['profile_img_link'])||empty($profile['profile_img_link'])||!isset($profile['profile_img_link']))
 							{
@@ -294,34 +295,34 @@
 			</div>
 		</div>
 
-		<div class="col-lg-9">
+		<div class="col-lg-9 col-md-9 col-sm-9" id="home-right">
 			<div style="width: 100%; /* border-right: 1px solid #e3e5e8; */">
 				<div style="padding: 0 10px;">
 
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active">
-							<a href="#overview-tab" aria-controls="overview" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
+							<a href="#overview-tab" aria-controls="overview" role="tab" data-toggle="tab"  style="">
 								Overview
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#comics-tab" aria-controls="myComics" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
+							<a href="#comics-tab" aria-controls="myComics" role="tab" data-toggle="tab"  style="">
 								My Comics
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#submit-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
+							<a href="#submit-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="">
 								Submit Comics
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#followers-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
+							<a href="#followers-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="">
 								Followers
 							</a>
 						</li>
 						<li role="presentation">
-							<a href="#following-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="padding: 15px 30px; display: inline-block;">
+							<a href="#following-tab" aria-controls="submit" role="tab" data-toggle="tab"  style="">
 								Following
 							</a>
 						</li>
@@ -467,7 +468,7 @@
 									<div style="padding: 15px 30px">
 										<a href="/linist/<?= $follow['username'] ?>"><img src="<?= $follow['profile_img_link'] ?>" height='50px' width='50px' style="margin-right: 30px"></a>
 										<label><?= $follow['fullname'] ?></label>
-										<input class="pull-right btn btn-warning" type="button" name="btn_unfollow" value="Unfollow">
+										<!-- <input class="pull-right btn btn-warning" type="button" name="btn_unfollow" value="Unfollow"> -->
 									</div>
 									<?php
 								}
@@ -475,22 +476,26 @@
 							?>
 						</div>
 						<div role="tabpanel" class="tab-pane" id="following-tab">
+						
 							<?php
 							foreach ($followed_arr as $follow) 
 							{
 								if($follow['follower_id']==$_SESSION['acct_id'])
 								{
 									?>
-									<div style="padding: 15px 30px">
-										<a href="/linist/<?= $follow['username'] ?>"><img src="<?= $follow['profile_img_link'] ?>" height='50px' width='50px' style="margin-right: 30px"></a>
-										<label><?= $follow['fullname'] ?></label>
-										<input class="pull-right btn btn-warning" type="button" name="btn_unfollow" value="Unfollow">
-									</div>
+									<form method="POST">
+										<div style="padding: 15px 30px">
+											<a href="/linist/<?= $follow['username'] ?>"><img src="<?= $follow['profile_img_link'] ?>" height='50px' width='50px' style="margin-right: 30px"></a>
+											<label><?= $follow['fullname'] ?></label>
+											<input type="hidden" name="username" value="<?= $follow['username'] ?>">
+											<input class="pull-right btn btn-warning" type="submit" name="btn_unfollow" value="Unfollow">
+										</div>
+									</form>
+
 									<?php
 								}
 							}	
 							?>
-
 						</div>
 
 					</div>
